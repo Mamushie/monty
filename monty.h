@@ -39,6 +39,8 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+extern stack_t *head;
+
 typedef struct global_s
 {
 	char *ipt;
@@ -76,5 +78,7 @@ size_t print_stack(const stack_t *h);
 void free_exit_ui(stack_t *stack, unsigned int lnum, char *mssg);
 int nl_count(char *tok);
 char *tokop_init(char *tok, int tok_offset);
+
+void err(int error_code, ...);
 
 #endif /* MONTY_H */
