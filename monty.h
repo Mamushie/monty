@@ -39,18 +39,15 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-extern stack_t *head;
-
-typedef struct global_s
-{
-	char *ipt;
-	int iptint;
-	char *tokop;
-} glo_t;
-
-extern glo_t *glo;
-
 void opcodecompare(stack_t **stack, unsigned int line_number, char *opcode);
+void free_stack(stack_t **stack);
+int init_stack(stack_t **stack);
+int check_mode(stack_t *stack);
+void free_tokens(void);
+unsigned int token_arr_len(void);
+int run_monty(FILE *script_fd);
+void set_op_tok_error(int error_code);
+
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
@@ -59,7 +56,7 @@ void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 void sub(stack_t **stack, unsigned int line_number);
-void divide(stack_t **stack, unsigned int line_number);
+void div(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
 void pchar(stack_t **stack, unsigned int line_number);
@@ -68,22 +65,19 @@ void rotl(stack_t **stack, unsigned int line_number);
 void rotr(stack_t **stack, unsigned int line_number);
 void stack(stack_t **stack, unsigned int line_number);
 void queue(stack_t **stack, unsigned int line_number);
-int _strcmp(char *s1, char *s2);
-char *getopcode(void);
-void free_stack(stack_t *stack);
-void free_exit(stack_t *stack, unsigned int lnum, char *mssg);
 
-char *read_file(int fd);
-void push_check(int toklenx, char *tok, stack_t *stack, int lnum);
-bool comment_check(unsigned int *lnum, int i, char **tok);
 
-int bc_exe(char *ipt, stack_t **stack)
-void free_stack(stack_t *head);
-size_t print_stack(const stack_t *h);
-void free_exit_ui(stack_t *stack, unsigned int lnum, char *mssg);
-int nl_count(char *tok);
-char *tokop_init(char *tok, int tok_offset);
-
-void err(int error_code, ...);
+char **strtow(char *str, char *delims);
+char *get_int(int n);
+int usage_error(void);
+int malloc_error(void);
+int f_open_error(char *filename);
+int unknown_op_error(char *opcode, unsigned int line_number);
+int no_int_error(unsigned int line_number);
+int pop_error(unsigned int line_number);
+int pint_error(unsigned int line_number);
+int short_stack_error(unsigned int line_number, char *op);
+int div_error(unsigned int line_number);
+int pchar_error(unsigned int line_number, char *message);
 
 #endif /* MONTY_H */
