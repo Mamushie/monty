@@ -32,11 +32,21 @@ typedef struct stack_s
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO Holberton project
  */
+
 typedef struct instruction_s
 {
         char *opcode;
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+typedef struct global_s
+{
+	char *ipt;
+	int iptint;
+	char *tokop;
+} glo_t;
+
+extern glo_t *glo;
 
 void opcodecompare(stack_t **stack, unsigned int line_number, char *opcode);
 void push(stack_t **stack, unsigned int line_number);
@@ -55,5 +65,16 @@ int _strcmp(char *s1, char *s2);
 char *getopcode(void);
 void free_stack(stack_t *stack);
 void free_exit(stack_t *stack, unsigned int lnum, char *mssg);
+
+char *read_file(int fd);
+void push_check(int toklenx, char *tok, stack_t *stack, int lnum);
+bool comment_check(unsigned int *lnum, int i, char **tok);
+
+int bc_exe(char *ipt, stack_t **stack)
+void free_stack(stack_t *head);
+size_t print_stack(const stack_t *h);
+void free_exit_ui(stack_t *stack, unsigned int lnum, char *mssg);
+int nl_count(char *tok);
+char *tokop_init(char *tok, int tok_offset);
 
 #endif /* MONTY_H */
